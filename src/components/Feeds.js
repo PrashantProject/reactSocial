@@ -2,6 +2,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import Post from "./Post";
+import AddPost from "./AddPost";
 
 
 const Feeds = () => {
@@ -15,7 +16,8 @@ const Feeds = () => {
             <Post/>
             
             <Post/>
-
+            
+            <AddPost/>
         </Box>
     )
 }

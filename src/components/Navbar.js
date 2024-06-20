@@ -1,4 +1,4 @@
-import { AppBar, styled, Toolbar, Typography, Avatar, Box, Stack, Menu, MenuItem} from "@mui/material";
+import { AppBar, styled, Toolbar, Typography, Avatar, Box, Stack, Menu, MenuItem, TextField} from "@mui/material";
 import React, { useState } from "react";
 import HouseIcon from '@mui/icons-material/House';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
@@ -14,37 +14,12 @@ const StyledToolBar=styled(Toolbar)({
 const Navbar=()=>{
     const [openMenu, setOpenMenu]= useState(false);
     return (
-        <AppBar position="stick">
+        <AppBar position="sticky">
         <StyledToolBar>
            <Typography variant="h6">P K</Typography>
            <Box >
-    <Stack direction="row" spacing={9} justifyContent={"space-between"}  alignItems={'center'}>
-           <Typography variant="p"  sx={{
-           display:{xs:"none", sm:"block"}
-          }}> <HouseIcon/>Home</Typography>
-          <HouseIcon sx={{
-           display:{xs:"block", sm:"none"}
-          }}/>
-
-
-           <Typography variant="p"  sx={{
-           display:{xs:"none", sm:"block"}
-          }}><BusinessCenterIcon/>Job</Typography>
-         <BusinessCenterIcon sx={{
-           display:{xs:"block", sm:"none"}
-          }}/>
-
-
-           <Typography variant="p"  sx={{
-           display:{xs:"none", sm:"block"}
-          }}><GroupIcon/>Network</Typography>
-          <GroupIcon  sx={{
-           display:{xs:"block", sm:"none"}
-          }}/>
-           </Stack>
-
            </Box>
-           <Avatar onClick={e=>setOpenMenu(true)} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+           <Avatar onClick={e=>setOpenMenu(true)} alt="Remy Sharp" src="https://tse1.mm.bing.net/th/id/OET.7252da000e8341b2ba1fb61c275c1f30?w=594&h=594&c=7&rs=1&o=5&pid=1.9" />
 
            
         </StyledToolBar>

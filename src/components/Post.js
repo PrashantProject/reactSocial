@@ -17,6 +17,7 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 
 
+
 const Post = () => {
     return (
         <Box  p={2}>
@@ -24,8 +25,8 @@ const Post = () => {
             <Card sx={{ maxWidth: 345 }}>
                 <CardHeader
                     avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                            R
+                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src="https://tse1.mm.bing.net/th/id/OET.7252da000e8341b2ba1fb61c275c1f30?w=594&h=594&c=7&rs=1&o=5&pid=1.9">
+                            
                         </Avatar>
                     }
                     action={
@@ -60,7 +61,7 @@ const Post = () => {
                 </CardActions>
 
             </Card>
-
+         
         </Box>
     )
 }
