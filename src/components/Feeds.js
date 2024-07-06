@@ -1,25 +1,35 @@
-
-import React from "react";
-import { Box } from "@mui/material";
+import { Box, Stack, Skeleton } from "@mui/material";
+import React, { useState } from "react";
 import Post from "./Post";
-import AddPost from "./AddPost";
 
+const Feed = () => {
+  const [loading, setLoading] = useState(true);
 
-const Feeds = () => {
-    return (
-        <Box flex={4} p={2}>
+  setTimeout(() => {
+    setLoading(false);
+  }, [3000]);
 
-            <Post/>
-            
-            <Post/>
-            
-            <Post/>
-            
-            <Post/>
-            
-            <AddPost/>
-        </Box>
-    )
-}
+  return (
+    <Box flex={4} p={{ xs: 0, md: 2 }}>
+      {loading ? (
+        <Stack spacing={1}>
+          <Skeleton variant="text" height={100} />
+          <Skeleton variant="text" height={20} />
+          <Skeleton variant="text" height={20} />
+          <Skeleton variant="rectangular" height={300} />
+        </Stack>
+      ) : (
+        <>
+          <Post />
+          <Post />
+          <Post />
+          <Post />
+          <Post />
+          <Post />
+        </>
+      )}
+    </Box>
+  );
+};
 
-export default Feeds;
+export default Feed;

@@ -6,7 +6,7 @@ import { WidthFull } from "@mui/icons-material";
 
 const UserList=()=>{
     return(
-        <>
+      
         <Box  sx={{Width:"100%"}}>
         <User/>
      <User/>
@@ -15,7 +15,7 @@ const UserList=()=>{
      <User/>
         </Box>
     
-        </>
+      
    
     )
 }

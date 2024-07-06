@@ -1,69 +1,110 @@
-
-import React, { useState } from "react";
-import { Tooltip, Fab, Modal, Box ,Typography, styled, Avatar, TextField, Stack , Button } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
-import ImageIcon from '@mui/icons-material/Image';
-import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
-
-
-const AddPost = () => {
-
-    const [addPostModel, setaddpostmodel]= useState(false);
-    const StyelModal=styled(Modal)({
-        display:"flex",
-        justifyContent:"center",
-        alignItems:"center"
-    })
-
-    const  UserBox= styled(Box)({
-        display:"flex",
-        alignItems:"center",
-        gap:"10px",
-        margin:"10px"
-    })
-    return (
-        <>
-            <Tooltip title="add" sx={{position:"fixed", bottom:20, left:10}}>
-                <Fab color="primary" aria-label="add">
-                    <AddIcon onClick={e=>setaddpostmodel(true)}/>
-                </Fab>
-            </Tooltip>
-
-
-            <StyelModal
-  open={addPostModel}
-  onClose={e=>setaddpostmodel(false)}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
->
-  <Box width={400} height={280} borderRadius={5} p={3} bgcolor="white">
-  <Typography id="modal-modal-title" variant="h6" component="h2">
-      Creat Post
-    </Typography>
-    <UserBox>
-    <Avatar  alt="Remy Sharp" src="https://tse1.mm.bing.net/th/id/OET.7252da000e8341b2ba1fb61c275c1f30?w=594&h=594&c=7&rs=1&o=5&pid=1.9" />
-    <Typography id="modal-modal-title" variant="p" component="p">
-      Prashant
-    </Typography>
-    </UserBox>
-    <TextField
-          id="standard-multiline-static"
-          placeholder="What's in your mind?"
-          multiline
-          rows={4}
-          sx={{width:"100%"}}
-          variant="standard"
-        />
-    <Stack direction={"row"} gap={2} mt={2} color='blue'>
-    <ImageIcon/>
-    <VideoCameraBackIcon/>
-   </Stack>
-   <Button fullWidth sx={{marginTop:2}} variant="contained" bgcolor="blue">Submit</Button>
-  </Box>
+import {
+    Avatar,
+    Button,
+    ButtonGroup,
+    Fab,
+    Modal,
+    Stack,
+    styled,
+    TextField,
+    Tooltip,
+    Typography,
+  } from "@mui/material";
+  import React, { useState } from "react";
+  import {
+    Add as AddIcon,
+    DateRange,
+    EmojiEmotions,
+    Image,
+    PersonAdd,
+    VideoCameraBack,
+  } from "@mui/icons-material";
+  import { Box } from "@mui/system";
   
-</StyelModal>
-        </>
-    )
-}
-
-export default AddPost;
+  const SytledModal = styled(Modal)({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  });
+  
+  const UserBox = styled(Box)({
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    marginBottom: "20px",
+  });
+  
+  const AddPost = () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <Tooltip
+          onClick={(e) => setOpen(true)}
+          title="Delete"
+          sx={{
+            position: "fixed",
+            bottom: 20,
+            left: { xs: "calc(50% - 25px)", md: 30 },
+          }}
+        >
+          <Fab color="primary" aria-label="add">
+            <AddIcon />
+          </Fab>
+        </Tooltip>
+        <SytledModal
+          open={open}
+          onClose={(e) => setOpen(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box
+            width={400}
+            height={280}
+            bgcolor={"background.default"}
+            color={"text.primary"}
+            p={3}
+            borderRadius={5}
+          >
+            <Typography variant="h6" color="gray" textAlign="center">
+              Create post
+            </Typography>
+            <UserBox>
+              <Avatar
+                src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                sx={{ width: 30, height: 30 }}
+              />
+              <Typography fontWeight={500} variant="span">
+                John Doe
+              </Typography>
+            </UserBox>
+            <TextField
+              sx={{ width: "100%" }}
+              id="standard-multiline-static"
+              multiline
+              rows={3}
+              placeholder="What's on your mind?"
+              variant="standard"
+            />
+            <Stack direction="row" gap={1} mt={2} mb={3}>
+              <EmojiEmotions color="primary" />
+              <Image color="secondary" />
+              <VideoCameraBack color="success" />
+              <PersonAdd color="error" />
+            </Stack>
+            <ButtonGroup
+              fullWidth
+              variant="contained"
+              aria-label="outlined primary button group"
+            >
+              <Button>Post</Button>
+              <Button sx={{ width: "100px" }}>
+                <DateRange />
+              </Button>
+            </ButtonGroup>
+          </Box>
+        </SytledModal>
+      </>
+    );
+  };
+  
+  export default AddPost;
