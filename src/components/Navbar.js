@@ -1,4 +1,5 @@
 import { Mail, Notifications, Pets } from "@mui/icons-material";
+import { useNavigate } from "react-router";
 import {
   AppBar,
   Avatar,
@@ -42,7 +43,17 @@ const UserBox = styled(Box)(({ theme }) => ({
     display: "none",
   },
 }));
+
+
+
 const Navbar = () => {
+  const navigat=useNavigate();
+  const Logout=()=>{
+   localStorage.removeItem("token");
+   if(!localStorage.getItem("token")){
+    navigat('/login')
+   }
+  }
   const [open, setOpen] = useState(false);
   return (
     <AppBar position="sticky">
@@ -91,7 +102,7 @@ const Navbar = () => {
       >
         <MenuItem>Profile</MenuItem>
         <MenuItem>My account</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={Logout}>Logout</MenuItem>
       </Menu>
     </AppBar>
   );

@@ -12,7 +12,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { useState } from 'react';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -20,13 +25,52 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const defaultTheme = createTheme();
 
  const Login=()=> {
-  const handleSubmit = (event) => {
+  const navigat= useNavigate();
+  const [loading, setLoading]=useState(false); 
+  const [email, setEmail]=useState("");
+  const [password, setPassword]= useState("");
+
+
+  const loginSubmit = async(event) => {
+    setLoading(true)
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    if(!email){
+    
+      toast.warn("email is requered", {
+        position: "top-center",
+    
+      });
+    }
+    if(!password){
+    
+      toast.warn("password is requred", {
+        position: "top-center",
+       
+      });
+    }
+
+    try {
+      if(email && password ){
+        const respon= await axios.post("https://socialbackend-426x.onrender.com/user/login",{email,password})
+        if(respon?.data){
+          setLoading(true)
+          localStorage.setItem("token", respon?.data?.data?.token )
+          toast.success(respon?.data?.message, {
+            position: "top-center",
+            onClose: () => navigat("/")
+          });
+        }
+      }
+     
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        position: "top-center"
+      });
+
+    }
+   
+    
+    
   };
 
   return (
@@ -47,7 +91,7 @@ const defaultTheme = createTheme();
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={loginSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -57,6 +101,7 @@ const defaultTheme = createTheme();
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e)=>setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -67,6 +112,7 @@ const defaultTheme = createTheme();
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e)=>setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -78,8 +124,11 @@ const defaultTheme = createTheme();
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-             Login
+           
+              { loading ?     <CircularProgress color="inherit" /> :   "Login"}
+           
             </Button>
+           
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -92,9 +141,11 @@ const defaultTheme = createTheme();
                 </Link>
               </Grid>
             </Grid>
+           
           </Box>
         </Box>
-       
+      
+      <ToastContainer/>
       </Container>
     </ThemeProvider>
   );
