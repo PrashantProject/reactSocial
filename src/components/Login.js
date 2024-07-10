@@ -32,7 +32,7 @@ const defaultTheme = createTheme();
 
 
   const loginSubmit = async(event) => {
-    setLoading(true)
+   
     event.preventDefault();
     if(!email){
     
@@ -51,6 +51,7 @@ const defaultTheme = createTheme();
 
     try {
       if(email && password ){
+        setLoading(true)
         const respon= await axios.post("https://socialbackend-426x.onrender.com/user/login",{email,password})
         if(respon?.data){
           localStorage.setItem("token", respon?.data?.data?.token )
@@ -62,7 +63,7 @@ const defaultTheme = createTheme();
       }
      
     } catch (error) {
-      toast.error(error.response.data.message, {
+      toast.error(error?.response?.data?.message, {
         position: "top-center"
       });
       setLoading(false)

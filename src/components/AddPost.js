@@ -86,10 +86,10 @@ import {
               variant="standard"
             />
             <Stack direction="row" gap={1} mt={2} mb={3}>
-              <EmojiEmotions color="primary" />
+              {/* <EmojiEmotions color="primary" /> */}
               <Image color="secondary" />
-              <VideoCameraBack color="success" />
-              <PersonAdd color="error" />
+              {/* <VideoCameraBack color="success" />
+              <PersonAdd color="error" /> */}
             </Stack>
             <ButtonGroup
               fullWidth
@@ -97,9 +97,7 @@ import {
               aria-label="outlined primary button group"
             >
               <Button>Post</Button>
-              <Button sx={{ width: "100px" }}>
-                <DateRange />
-              </Button>
+             
             </ButtonGroup>
           </Box>
         </SytledModal>

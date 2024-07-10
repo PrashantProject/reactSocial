@@ -1,13 +1,44 @@
 import { Box, Stack, Skeleton } from "@mui/material";
 import React, { useState } from "react";
 import Post from "./Post";
+import { useEffect } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router";
 
 const Feed = () => {
+  const navigat = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [posts, setPosts]=useState([]);
+  const token = localStorage.getItem("token")
 
-  setTimeout(() => {
-    setLoading(false);
-  }, [3000]);
+  const post =async()=>{
+    try {
+      const respon=await axios.get("https://socialbackend-426x.onrender.com/post",{ headers: { Authorization : token } })
+      if(respon?.data){
+        setPosts(respon?.data?.data.post)
+        setLoading(false);
+       
+      }
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        position: "top-center"
+      });
+      if(error.response.data.statusCode==401){
+        localStorage.removeItem("token")
+        navigat("/login")
+      }
+    }
+  }
+  useEffect(() => {
+    post();
+  },[])
+
+  // console.log(posts.post);
+  // setTimeout(() => {
+  //   setLoading(false);
+  // }, [3000]);
 
   return (
     <Box flex={4} p={{ xs: 0, md: 2 }}>
@@ -20,14 +51,13 @@ const Feed = () => {
         </Stack>
       ) : (
         <>
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+       {posts.map((item, index) => (
+        <Post key={index} item={item} />
+      ))}
+         
         </>
       )}
+      <ToastContainer/>
     </Box>
   );
 };
