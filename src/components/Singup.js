@@ -12,6 +12,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 
@@ -19,14 +25,61 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme();
 
- const SignUp=()=> {
-  const handleSubmit = (event) => {
+
+
+const SignUp = () => {
+  const navigat = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  const handleSubmit = async(event) => {
+   
+    
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+   if(!name){
+    
+    toast.warn("Name is requered", {
+      position: "top-center",
+  
     });
+   }
+   if(!email){
+
+    toast.warn("Email is requered", {
+      position: "top-center",
+  
+    });
+   }
+   if(!password){
+
+    toast.warn("Password is requered", {
+      position: "top-center",
+  
+    });
+   }
+
+   try {
+    if(name && email && password){
+      setLoading(true)
+      const respon = await axios.post("https://socialbackend-426x.onrender.com/user/signup",{name,email,password});
+      if(respon?.data){
+       localStorage.setItem("token", respon?.data?.data.token);
+       toast.success(respon?.data?.message, {
+        position: "top-center",
+        onClose: () => navigat("/")
+      });
+      }
+    }
+   } catch (error) {
+    toast.error(error.response.data.message, {
+      position: "top-center"
+    });
+    setLoading(false)
+   }
+   
   };
 
   return (
@@ -48,7 +101,7 @@ const defaultTheme = createTheme();
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
+            <TextField
               margin="normal"
               required
               fullWidth
@@ -57,6 +110,7 @@ const defaultTheme = createTheme();
               name="name"
               autoComplete="name"
               autoFocus
+              onChange={(e)=>setName(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -67,6 +121,7 @@ const defaultTheme = createTheme();
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e)=>setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -77,9 +132,10 @@ const defaultTheme = createTheme();
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e)=>setPassword(e.target.value)}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" color="secondary" />}
               label="Remember me"
             />
             <Button
@@ -87,8 +143,9 @@ const defaultTheme = createTheme();
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
+              disabled={loading}
+            >{loading? <CircularProgress color="inherit" /> : "Sign Up" }
+              
             </Button>
             <Grid container>
               <Grid item xs>
@@ -104,7 +161,7 @@ const defaultTheme = createTheme();
             </Grid>
           </Box>
         </Box>
-       
+        <ToastContainer/>
       </Container>
     </ThemeProvider>
   );

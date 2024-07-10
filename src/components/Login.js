@@ -36,14 +36,14 @@ const defaultTheme = createTheme();
     event.preventDefault();
     if(!email){
     
-      toast.warn("email is requered", {
+      toast.warn("Email is requered", {
         position: "top-center",
     
       });
     }
     if(!password){
     
-      toast.warn("password is requred", {
+      toast.warn("Password is requred", {
         position: "top-center",
        
       });
@@ -53,7 +53,6 @@ const defaultTheme = createTheme();
       if(email && password ){
         const respon= await axios.post("https://socialbackend-426x.onrender.com/user/login",{email,password})
         if(respon?.data){
-          setLoading(true)
           localStorage.setItem("token", respon?.data?.data?.token )
           toast.success(respon?.data?.message, {
             position: "top-center",
@@ -66,7 +65,7 @@ const defaultTheme = createTheme();
       toast.error(error.response.data.message, {
         position: "top-center"
       });
-
+      setLoading(false)
     }
    
     
@@ -123,9 +122,10 @@ const defaultTheme = createTheme();
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
             >
            
-              { loading ?     <CircularProgress color="inherit" /> :   "Login"}
+              { loading ?     <CircularProgress color="secondary" /> :   "Login"}
            
             </Button>
            
