@@ -15,10 +15,12 @@ const Feed = () => {
 
   const post =async()=>{
     try {
-      const respon=await axios.get("https://socialbackend-426x.onrender.com/post",{ headers: { Authorization : token } })
+     // const respon=await axios.get("https://socialbackend-426x.onrender.com/post",{ headers: { Authorization : token } })
+     const respon=await axios.get("http://localhost:8000/post",{ headers: { Authorization : token } })
       if(respon?.data){
         setPosts(respon?.data?.data.post)
         setLoading(false);
+        console.log(respon?.data?.data.post)
        
       }
     } catch (error) {

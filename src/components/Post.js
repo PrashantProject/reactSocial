@@ -10,11 +10,40 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
+import axios from "axios";
+import { useState } from "react";
 
 
 
 
 const Post = ({ item }) => {
+ 
+  const token = localStorage.getItem("token")
+  
+  const [user, setUser]= useState( localStorage.getItem("user"))
+  const like =async(postID)=>{
+    const res =await axios.post(`http://localhost:8000/post/like/${postID}`,{}, { headers: { Authorization : token } })
+    
+  }
+
+
+  const unlike =async(postID,likeId)=>{
+    const res =await axios.post(`http://localhost:8000/post/unLike/${postID}`,{likeId }, { headers: { Authorization : token } })
+  }
+  const handleCheckboxChange=(event, itemId, likeId  )=> {
+    // Determine if the checkbox is checked or unchecked
+    const isChecked = event.target.checked;
+  
+    if (isChecked) {
+      // Call the like function when checked
+      like(itemId);
+    } else {
+      // Call the unlike function when unchecked
+      unlike(itemId, likeId);
+    }
+  }
+
+
   return (
     <Card sx={{ margin: 5 }}>
       <CardHeader
@@ -48,10 +77,12 @@ const Post = ({ item }) => {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <Checkbox
+          <Checkbox   onChange={(event) => handleCheckboxChange(event, item._id)}
             icon={<FavoriteBorder />}
+            checked={item.like.some(likeObj => likeObj.like === user)}
             checkedIcon={<Favorite sx={{ color: "red" }} />}
-          />{item.like.length}
+          />{ item.like.length }
+         
         </IconButton>
         <IconButton aria-label="share">
           <Share />

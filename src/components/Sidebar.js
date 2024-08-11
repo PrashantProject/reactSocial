@@ -18,6 +18,7 @@ import {
     Switch,
   } from "@mui/material";
   import React from "react";
+  import {Link} from "react-router-dom";
   
   const Sidebar = ({mode,setMode}) => {
     return (
@@ -25,7 +26,7 @@ import {
         <Box position="fixed">
           <List>
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#home">
+              <ListItemButton component="a" href="/">
                 <ListItemIcon>
                   <Home />
                 </ListItemIcon>
@@ -48,21 +49,23 @@ import {
                 <ListItemText primary="Groups" />
               </ListItemButton>
             </ListItem>
+            < Link to="/jobs">
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#simple-list">
-                <ListItemIcon>
+             <ListItemIcon>
                   <Storefront />
                 </ListItemIcon>
                 <ListItemText primary="Marketplace" />
-              </ListItemButton>
-            </ListItem>
+            </ListItem> 
+             </Link>
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#simple-list">
+              <Link to="/network">
+              <ListItemButton >
                 <ListItemIcon>
                   <Person />
                 </ListItemIcon>
                 <ListItemText primary="Friends" />
               </ListItemButton>
+              </Link>
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton component="a" href="#simple-list">

@@ -52,9 +52,12 @@ const defaultTheme = createTheme();
     try {
       if(email && password ){
         setLoading(true)
-        const respon= await axios.post("https://socialbackend-426x.onrender.com/user/login",{email,password})
+      //  const respon= await axios.post("https://socialbackend-426x.onrender.com/user/login",{email,password})
+       const respon= await axios.post("http://localhost:8000/user/login",{email,password})
+
         if(respon?.data){
           localStorage.setItem("token", respon?.data?.data?.token )
+          localStorage.setItem("user", respon?.data?.data?.user._id)
           toast.success(respon?.data?.message, {
             position: "top-center",
             onClose: () => navigat("/")
@@ -133,7 +136,7 @@ const defaultTheme = createTheme();
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  Forgot password?  
                 </Link>
               </Grid>
               <Grid item>
